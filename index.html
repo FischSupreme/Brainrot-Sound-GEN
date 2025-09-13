@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Italian Brainrot AI Voice</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+  /* Global Styles */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Press Start 2P', cursive;
+    background: radial-gradient(circle at top left, #1a1a2e, #162447);
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    overflow-x: hidden;
+  }
+
+  h1 {
+    font-size: 2.5em;
+    color: #ff3c3c;
+    text-shadow: 2px 2px #000;
+    margin-bottom: 30px;
+  }
+
+  input {
+    width: 320px;
+    padding: 15px;
+    font-size: 1em;
+    border-radius: 12px;
+    border: 2px solid #ff3c3c;
+    background: #1a1a2e;
+    color: #fff;
+    margin-bottom: 20px;
+    transition: 0.3s;
+  }
+
+  input:focus {
+    outline: none;
+    border-color: #fca311;
+    box-shadow: 0 0 15px #fca311;
+  }
+
+  .button-container {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 30px;
+  }
+
+  button {
+    padding: 15px 25px;
+    font-size: 1em;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.3s;
+    font-weight: bold;
+    color: #fff;
+    text-transform: uppercase;
+  }
+
+  button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px #fca311;
+  }
+
+  #generateBtn { background-color: #28a745; }
+  #loopBtn { background-color: #ffc107; color: #000; }
+  #stopBtn { background-color: #dc3545; }
+
+  #output {
+    font-size: 1.8em;
+    line-height: 1.5;
+    max-width: 90%;
+    margin-top: 20px;
+    min-height: 60px;
+    color: #fca311;
+    text-shadow: 1px 1px #000;
+    animation: fadeIn 0.5s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95);}
+    to { opacity: 1; transform: scale(1);}
+  }
+</style>
+</head>
+<body>
+
+<h1>🇮🇹 Brainrot AI Voice</h1>
+
+<input type="text" id="userInput" placeholder="Type something...">
+
+<div class="button-container">
+  <button id="generateBtn" onclick="generateVoice()">Generate</button>
+  <button id="loopBtn" onclick="loopBrainrot()">Loop</button>
+  <button id="stopBtn" onclick="stopLoop()">Stop</button>
+</div>
+
+<div id="output"></div>
+
+<script>
+// Italian-style syllables
+const italianSyllables = [
+  "Lulun","Flevinpre","Megaplu","Pluto","migosi","mapopodro","Ricofl","Grizak","fliricgo","polodan","Saga","Skra","zingsk","brra","santmuno","Jujubabatun","pollo","casa","sko","gozo","nope","nopl","Locosant","Napmeme","due","Maxcap","gringo","slmammki","loco","aha","Zakgra","milo","gigfra","clokfl","nagucc","uno2chip","tunroma","ehlo","caskosk","gucci","Ehcapi","fazo","Zawo","midue","bello","dro","romaskzak","sci","zio","Caprico","mini","zara","cafrozar","sisi","skobruh","bravo","drip","skorr","kappa2","frgramio","grun","frat","Ehsha","fanuno","brduetoy","Nekbr","Juju","Clok","skull","nubbr","Skratoy","woo","skopre","chimicr","nolo","Sisi","trtot","cazing","slanviv","booo","sosl","Gucci","Mio","kapsn","muno","sabel","Fomo","Beza","primo","plutsla","gimunwom","kilobell","Sagmamsl","skra","mioamigrito","yopabell","meme","bomin","uno","saga","taco","matr","Snayotot","woobo","gofroca","maxo","napbe","tuzar","santo","Brratac","miodri","mega","babplsk","posnun","flip","grazie","troxprrrr","ritvitoza","neko","Kilopolo","napatrosom","grinsisi","miuno2nube","tre","Viviric","dutu","toro","faju","Polobooo","Zonorr","rrrzon","trox","Vivo","poppollcr","capi","solo","memeric","Jujtut","br","toyomiloam","vivo","dayobell","treah","skfa","nube","clsha","unrom","toto","drinop","tuna","snaknap","Dankmunoblat","nekfaz","Bruh","torbr","Tutti","Grazun","giga","santripop","minisl","bravkapp","Frodsombwomb","flex","megno","migo","chipric","Driamig","tuca","Jujsla","Naeh","zinnapa","duezak","satik","prlocouno2","brrtikimem","maxnap","Tikigo","skrasombuno2","flno","ehplsna","brwompo","crarrr","boss","tugraz","maxvi","zing","nano","skuntr","pastr","trippy","traprom","tiki","Skzi","slanpast","bongo","napabab","vino","fomonubna","Dripcas","Romalup","dantro","Fazobrr","Drosci","Sko","Mamio","fomo","Trigig","gucskraza","draha","frodo","napo","Luna","Tre","skkapp","brplu","rrroma","brr","unvivi","nemaxoah","zaratomini","Kadubca","Prbo","trebelldr","Vivi","tacomega","boznap","Loszakpoll","moro","Uno2","uno2","rico","treskul","woozak","famigto","brrcred","torrr","scisisrit","duenekpr","toyo","amigra","napplut","ludub","wombo","lofr","Micreloco","yolo","Mibe","Mini","Snak","munolutor","nafazo","slap","Zaneksh","dubbra","Magoz","clok","rimitoy","rrrtunayolo","snak","crasdu","rrrbrrskul","mio","tungsku","popo","sombra","toplumam","rito","nolofomflip","babatro","Drotuttsom","slapr","Fanta","Nube","Solo","yoyol","yollotut","skricsaga","roma","mituguc","Moro","ahafazo","bozo","Los","drdr","sazon","ritotaco","Eh","tungtubell","lutrcr","Kapmi","brbr","Mega","prvi","snacask","bazar","chipi","Polo","Kappa","batikma","trapfa","tunlo","loseh","previtpolo","brmilo","grazmuno","ripr","kappa","tredubsko","kilo","Sagauno","grintrotr","duebr","polo","ahamio","chkapdub","bongsa","memno","Kappbel","wombvit","Credo","wombzakwo","dueti","Trbong","tunyo","Nope","Babtrewo","Lunapre","napafleskul","bemeg","prego","tiknub","trdan","vito","amigo","rombell","slang","fanta","vivi","grapregmor","Loscr","Zivi","belrit","trfli","Meme","trap","mawonapo","gozovit","tung","boka","napa","Tacnek","bosbel","Toro","Lupo","skupolo","credo","Ponub","flirrpo","kime","sisskr","bella","ahzonopolo","sayowo","bruhtrox","memmunozak","Duto","kilosbozo","tunnolo","nona","Torbr","unokacasa","ziplut","unsaga","lomami","fazogigwomb","noptrip","mobruh","dank","Gigaplut","amigtr","riboti","vinmatik","frzinnu","troxtoyo","triblatzak","solsaga","Bozo","nomamem","Meskume","lupo","sanzi","kiloro","brfan","Pollnop","napamicap","primcredme","mamzio","amvincra","Tiki","lunafan","Prego","duflfaz","Losme","Trippy","skch","bruh","los","zaranap","skfanmem","fazri","nasko","kilnekmam","mekilboz","minbr","Uno","tripvivi","faflex","capnol","ziokauno","munosla","soslbo","unoskul","minisolobo","bladro","Pasttrosolo","zota","Amigo","Bravkapp","Lunawom","lupotutsag","zak","Credclo","Vivobab","megdr","baba","brnano","migopa","brtusku","skunmoro","nantun","solochigozo","tovit","flebongpr","trip","somno","sozi","boosistoyo","kasom","grfr","Toyofomo","milobr","metona","Minolo","Mammmio","tikivi","bruhmio","vinobong","eh","bodubne","romdro","luprim","sktutt","blat","vitoromatac","Nano","frbelwom","nanbrasolo","totpol","guccdriptra","Shadcapidr","tungcano","crastoy","brrarit","drbrr","megasisigr","gigto","Chipi","crash","Snakmitiki","tikigozwo","Napo","shadbla","trinap","sislu","tacnopeclok","luuno","Natoro","manapskun","yoltun","griba","tutti","unbab","scidribozo","jupri","gigavit","Luptr","Roma","brpri","mamma","credvino","Minifazo","grbong","Zamiodank","snunbr","Due","Yolopreg","soca","Ehsaslap","mawo","luna","danvit","Milo","nolwo","milopo","blatsaga","woochi","noki","flexfom","tresko","yolosk","tunma","noloflex","gripol","crbo","Trbonsko","Kilo","troneko","pluto","sispl","brrofa","natra","Tikima","Tunskskun","bonmilo","Gozo","trpreg","rrr","Bozogrgi","miblatra","Bosvin","Bostrox","poskul","Bello","Lumun","Sci","lossl","Brrrrzono","womdue","migbamilo","skunk","shadbostoto","Wombslapgu","bruzar","noluno2","Locno","zinma","dunan","yolobos","romavivomi","mibooopopo","tutttrip","drotunfant","snboshad","vigu","skolupo","ehbrrnop","snakmeme","Trzin","Kilowosis","santchiric","beun","Aha","casafan","brsant","maxrrr","ritreme","Prtacgucc","Fazobo","ehnop","ponolo","Metoyo","plutkap","brmeme","Maxo","Nolo","Lotiki","troxslap","Casbo","luchi","vitiki","munoblat","bruhsombcasa","ehlos","brrato","shatrrrr","banapoju","shaddr","migsislap","ahatuna","troxtroxwoo","shaflmoro","mizi","mefazo","Meneko","Zasci","mioca","napzinplu","toyritonapo","shado","Crgrin","lunamem","scahajuju","trlo","skramemtung","Shado","pasta","unbo","Flip","bozozara","flflipri","unzivino","midrrito","bratr","jujmi","tretrizon","Duebrsko","Mizi","boskapp","sciclok","Pollo","scpr","tikbell","Nolpri","flbla","bootu","unoclrrr","lupkilu","bobel","tibla","zinuno","Credbobe","zinzigi","bosl","bokap","bolobong","socap","fratdrip","Yolo","tripmi","snbo","fltoro","Vino","favi","slna","Frodo","Tuttroplu","zimamm","Kappa2","blafr","sozak","gucbr","drotun","santoy","belkil","booogufro","vifro","tuntun","uno2fa","Tuna","Unslbab","woocra","nansagaslan","Bravo","romvin","simammflip","frodfroduno","locokapp","blatna","bomegash","Maxno","tungdr","Amiritocas","droziobozo","Skunk","Migo","frogi","natu","mabrtri","Flex","trvi","zingto","paspo","Ricofan","miskuwo","kanub","chigr","shask","flicr","Somna","gutoyo","maxna","wovi","traproma","chipahapoll","nubetutbaba","Migra","frdrne","zono","moromio","snyol","ricslacre","Powoma","Guccjujcasa","mecr","zonobruh","pastna","dub","Minbel","przinpri","tacobong","tratrap","zakfrdu","viduzio","Boogr","tuprdr","milofromeme","Zing","drbabsku","Toyosko","lunazinvin","drocre","tikna","rrrcredto","booopo","bryonop","popmil","paszing","Skojunol","craflilo","pregplu","wooshad","romfa","grinloc","Polosla","losto","Skull","lupotre","toyosomuno","cazono","Zara","unnapmin","Woopopas","graznopemor","maxonop","amigbo","Blshadtr","luviuno2","drmigodr","zikapp","Woo","drfant","rika","trvino","Wokilotor","fazogozobell","Fanttut","slarickap","Skunsisi","locloco","trbr","ahawootr","solmi","troxtoy","louno","Ehsobr","Chibrbo","polminbr","tacoehnek","kilpop","visl","kappl","zononope","bongtik","unosk","Boss","zonocap","nocre","fantoyo","capibla","sisprzio","toromorsi","vigrvi","Nuvi","amibaneko","duamflex","dubno","Nugrinnap","nenu","yopri","skbel","lunamam","priziobe","Nator","juju","Brtra","Tikidro","judue","gocl","sckapp","foguc","chnolo","boyolo","jujugu","Tuuno","todro","Torsaga","mammchip","bobe","sisiaha","Memtrip","ahagrtra","dubamfom","scisko","jujupl","polzi","Torgridank","taccr","Somdubpri","munovit","vitoeh","youn","slaprim","plnolosn","flsisi","bossfomo","Solopas","Dagigsa","Flezitri","rrjujutri","ehcrasfra","shatung","vitotoy","Brrno","namoro","Vipas","vivoneko","bonbrr","dubbrra","kilototo","Cadrobos","milozakpol","tikkilofl","Skugrin","trepona","naslabe","napbel","Fazo","ziobe","Ponano","brrsomnek","Dusi","Meamigmaxo","zilupo","posktrap","trayolosla","frodno","Nafrwom","tundub","slancre","movivnan","passci","toytrimi","rrrjujsan","bozobel","Capi","fanunonol","Wombo","lupoto","membl","zingsh","trimegyol","Besla","Casasc","zabrlos","Megdub","Gucsaga","sagucc","gucmio","brusisi","Maxobossclo","paah","fomzio","treca","trun","posag","Skuunka","Nopslan","panu","tafr","trbrr","fomofom","crefl","viplut","tufl","noloto","polcremio","Grtrinan","grkap","bellrom","sisbozrr","ziograbr","babtrap","Frkapp","grbe","scizak","tuzing","Skbooo","frodzono","Poppreg","duevivcr","crnu","napoflebrr","brapobra","rrmiltoyo","belltun","plrori","tripza","shamipri","noltun","tacowoochi","Trapsagun","craschpoll","slantrbr","grtu","tunmillo","braplupolo","gridu","losclolos","tufaz","Bozolosna","vivifomo","woofrod","Mortoyonano","davi","treuno","medr","zomegsolo","bozsc","goztrip","Mormortr","ziobrra","misant","capisisjuju","zinmor","Muntun","blazi","grnapa","brrdub","fazboo","judrigoz","kicr","Soki","unopr","Pasl","frodlos","vivilocopoll","pomiloka","bobr","scilos","memech","bruheh","tronop","ehtri","Lunasku","yoskun","naposk","meami","ahwootre","munotun","memdrona","frodan","grnu","danloszio","Pastmeg","Pocrasyolo","minimi","tormoro","morvivo","tunca","loshad","vivotuttmoro","Grazie","woviv","popocra","slsk","santjuj","miloboz","morfo","Dank","frobrav","Tripshgiga","slapmilo","nopetreeh","sarrr","podubsi","Pastluda","bogoz","Kapki","capuno2","flexneko","nekolomam","polopofa","grilos","Trna","premi","zaktoy","vitu","Napa","skrpol","slri","sololup","ahano","Bongbl","napmig","frodtung","skulsko","megabo","ziofomo","poslbon","capa","Dub","prirom","trolocras","Blat","nufan","napogo","munmaxo","famio","fanric","soza","drippata","nopevi","nanbra","lugozo","bravboz","flextu","driflexbon","babtacori","gobla","trzingmio","tritra","Tacrit","Capitripyol","Duboo","folocoboz","mamsl","nolsna","fazvitoroma","lupta","cramibl","crabe","droca","Sombra","milobe","losza","Clokbr","Fomotrecasa","ricomaflex","Chicred","kapmuno","Gucczasan","capifaz","Milodrtot","brbel","talosom","Zojuju","crgra","bagiga","chipnope","todrip","maamlun","Zapol","Brrgraclok","sisiskr","totfazono","grisaga","vinun","Moreh","skovino","vitduvito","gisk","tikpr","mamvitr","uno2mammzak","skrloco","milovi","toysk","trri","fanvitoju","fantmil","duebotor","Snakgiga","pobljuju","guckaun","Rico","casamemefant","Nopegi","Morotoy","nolgrin","slpr","bozsoloka","tripplut","scipoll","soplu","Rotu","Duenano","Tuttgiga","bramefan","bodutra","lokapp","viunogucc","dripbr","kilobo","Blagigamega","Brrlo","yoyolo","munfo","skfomfle","fanpopbo","nubmilo","mabe","trapolo","ponaeh","zartor","Slang","grfl","prcas","nekosa","Sombsl","Dronu","Trcra","Gringo","fameg","Toto","unomun","Trblatuno","Casa","Fratmig","kaslaguc","Mabab","Capbrra","tuttloc","mammvi","Skrawoosnak","lurrr","brvigoz","Sisicre","drfazoti","duesk","fantbatri","skwomb","Grazguccrito","judanbaba","brnol","dueba","Bellmemi","miosla","Botik","Toyomax","bellyobrra","gradrip","pogozomil","frbruh","shadbrrom","tunsna","trapcr","blatot","brno","munnapo","Migmem","guccbruh","mintoyo","clorrr","treneko","sklo","Giggi","tutsciflip","frbru","calumo","chilupo","pollsagboss","unobr","Rito","scikap","Vinomorfant","creflexcas","Gritu","vitonalupo","tunabr","unodub","naro","munorom","skratu","tikilo","shroma","milozo","troxka","vipltoy","Unzo","Craplu","Unvi","Bongbe","Scwonop","migoziotr","milbrpri","losgrgucc","poblatnolo","tikimamm","bossno","sozisl","tungzi","drofo","uno2mu","napsk","tripmoro","tunasant","skrami","kapptot","zingzi","trcasza","soloyolo","tofom","tunafl","Brbr","Nolsolopop","tacoto","kapyolofaz","pasna","bosstuttfrat","Fanapatr","casatoybab","Tutbozpo","ahadri","bellbrvi","unshadmun","brrflex","bryol","rodankgi","ahfaz","Tafl","Pounomil","fomograz","locpreg","Ritrr","romax","totorrrkapp","wooritmem","naritozio","blaskul","vilupo","ahatorlup","ahwoo","chskra","primtrmeg","prelos","memtu","Woma","brutoyo","kafodan","fatrip","kilocappa","Gozodubah","minsobr","unochnu","bongnapa","ziomin","graznap","tuttslapri","tiktobla","kilpregmaxo","saun","trlup","Brr","flibrdro","tutpopofra","ehritoca","Mammtu","nopelos","ehtaczin","nozin","flfli","mibosci","clfrobo","Giga","napalo","capiaha","Skofra","goztrpreg","zareh","Casca","nopblattr","duedrocl","bozocasa","Vivchsn","craszak","brmi","yologosaga","gucbelju","Primo","sktolo","zinwosk","togozo","flexbeltac","trinapbruh","Toyotubo","napkilo","sisiam","Slpr","migfro","Brrr","munoric","sksku","Br","Mungoblat","cldub","Bellmi","bogrsk","vizio","poki","Tung","frokapp","Gigamawoo","amiahafro","Bebe","trapsk","Noso","Maxoto","vivopreg","sombmi","slantoy","Popskusag","Brrka","bonpasbozo","morotro","tripdan","slbosnapa","yotor","boziboss","Drip","amifro","kilofomo","Tiunotrap","sisifom","basis","borr","Womdri","unflex","fomodri","Napskul","tuttflex","Nanofant","Bongo","shsci","toypl","Vimamm","pastsomchip","tortot","vivorrr","blaskcras","tikiflip","nalocap","tokapp","posn","naplo","vinovi","Zatri","Woobrr","bozguc","tactre","tripsha","riahbr","bozocadri","kaplo","bruhbr","totuttma","Sagabra","Chrrr","crezononu","frosol","tatr","duelo","tutpaspre","Trifra","caplosa","skrkap","sisifrod","pozon","Sisiflip","Gozoeh","solonappre","drosoloco","credsant","Unshad","Shmor","guccr","brbo","brracr","nanoroma","lupkafa","vivimo","tunadrka","gucskuboo","skofrat","luptot","Clskun","dansl","babgozgo","torto","clogucc","Befle","zimigami","Credkapp","boblafan","Ehgigaso","lunaframega","zingpol","ehvitro","mefrpreg","Frat","Mima","clochgra","clokslan","Prewogucc","ponoroma","tuntofo","vivozara","blatsom","frsk","menub","kilmunfrod","wotrox","maxda","Torogragoz","Vibr","miuno","tikpreg","Dro","Locoto","pastrki","Taco","fllo","amskbr","drodrsolo","miniahboss","tototuntr","bruhdubnolo","snchitu","Sagfrasl","sksha","Trsk","somuno","nazintrip","blkatoy","fokap","kafom","scigrluna","Brra","miguno2zara","casdan","drotre","tutbrrbell","Bouno","prdueroma","Bella","Sadawoo","snabo","clokbl","cloksorico","Fraclo","negiga","tacoaha","wookilo","fleeh","belrico","gonap","Vivinolmigo","tottutun","skogiga","Nankapptrip","losan","Rrrbon","tuttgraz","jujutac","Vivilunam","Caswomb","ritoprim","trguc","trelos","milmilup","brrdan","tunguc","frafl","Dandank","zakunonope","unonopza","crafa","bozto","Munotut","fronop","nekun","Tornolosom","morfr","chipfr","mamtreme","chifro","primmaxo","tunsis","Lofazo","cheh","tugo","Sisdankbooo","shca","goah","belvi","Judr","frazak","tungtun","Popmeg","Tikuno2","scislap","gribos","Sisbo","Milomin","grvifro","duyo","sangr","Ehwomdro","soshad","mavi","unofaz","Clomaclo","Nasag","flme","bomiome","skumax","lundr","vivipoll","rrrzono","brrtu","nanbooo","minitoto","brcas","brtot","miocredti","snriviv","unotunmil","lunbo","romscifa","risogri","Santo","yosantnube","Trinubvino","beltik","crlupbong","dronek","Torsl","trebo","tapr","Kiyo","Brbobo","mammmi","romatung","trzi","tripsancapi","Tacokap","nekmam","blatdriplos","zaksolo","tripbell","belbo","Nopeclokdro","Dribruh","snadri","Neko","viun","Romatotocras","skbellpoll","fanmifo","vivsolbe","primro","zarapakilo","fraskuzi","wompataco","bonano","fliuno","wonu","primcas","bozbong","ritri","sltoyo","pretrkapp","Loco","drdri","brbotun","plubr","boprimam","mininu","Skrasn","nopemamchi","brkapp","napotu","bofafli","untrox","ehfrod","tuttslaplu","trofazo","juun","brpasttr","blatsiszin","droviv","woochip","tiktikigig","flisis","miyol","frodamig","pregskoflip","ziorito","unmini","cazakpr","grazzarro","Sisimemeslan","rrrdue","flidu","namaxo","fratvino","skmebaba","becl","meslapflip","nekvin","trapclokzi","drmax","Capr","gusl","fomfra","bosscap","nozak","Zakboo","Polflex","tutskucras","fazoflexcra","skunwoo","nanfazo","Toyo","Trippo","balupofl","kapbe","zafo","Brrfantjuj","Wocr","fratnubbo","unofr","solgringri","brrmo","pluahatoto","jujubr","pasgrin","Dutunglos","drovit","gigatuzing","lupmigochip","skogig","preminitaco","capicredguc","gozosci","snakna","kapsla","fazotre","sagtacgra","makilo","rograz","poskobrav","Dankpoll","bozoflepri","woosh","Yolowogra","kilplutbruh","rictoplu","Woti","ampoll","Dubo","skotiki","Brvi","pabr","lupbe","skcrvi","belrrr","belltrap","minna","slaflcasa","tushaba","brrbru","bonbelltu","shasku","crdanpo","shadflenap","Vigiga","flexgig","zakfant","ehmuno","vivsku","crrit","lupofazopl","bebozslap","zaramaclo","nopeboss","losmam","unokapp","trpol","mammskomax","Craswo","babsa","gozpo","frbrr","Tottoy","gigdro","solosom","Grinwo","primfami","nekouno","Pasta","tisk","Vivigraz","slantr","uno2zio","nabrloco","Unogi","gozomem","Brrziogiga","kisha","trgr","babacas","munoahatri","sksla","slandanfant","fandrobrr","momaxzio","ehtr","kaguceh","slza","brgraz","katrsci","pasha","ununo2","scifrod","Kapuno2","Baba","sntoro","bozozin","Brrmuntrap","brsnasci","bellvinloc","grtotoy","skutripmig","skgrbo","tungto","Naskutun","lupotra","zonbe","kafli","tunfa","ahatro","skboss","brsis","molupsant","capiviv","slapzarafra","misolo","gumeme","toytre","skotut","nopeblafazo","ritno","blama","zarmem","sisitotfazo","mebr","ziofomobrra","Viviluna","frosk","Rrtrmun","brvino","cldri","clokdu","zakpasgr","Driptutt","bago","Polopre","Daka","capipreg","brunopsol","Vivika","snakmigo","bravehkapp","trnekomam","babalo","blaviveh","medro","dripbrra","potozak","Skgrinek","vibr","dubsant","Tutpoll","mammnubedro","tukadan","polotr","vitocre","vintrefa","sciwomb","gozodr","vitmil","nubbab","Skbo","yolgucc","Trgrin","tolonube","lutorotr","wolunabrr","sagfr","ahatutt","mifr","flcr","bazon","bonvi","Skulrr","vivbongdri","killup","Skulboodro","tozotr","wombvivi","crasnudro","brtr","nopfomo","nopeneko","prifl","tuflip","visko","trnop","foto","migotupo","taczakwom","faca","primju","Skslbel","solgozo","ahaclok","unneko","tragigame","guyofomo","Solofrodsolo","natroxro","Shanafo","grinbelmio","trilup","zacrazon","romabra","zintikvi","Brrca","ehpolo","Skubrfa","Gringi","lutrsci","clfa","lossku","Solmegbr","Basagalup","skulbaba","grskra","Skosago","nanbr","rinop","skulfasag","poposna","dankbel","zingmio","Taczaratre","zabrr","drtre","loamishad","morodrip","nasa","sabon","skogoz","Calun","Dronaplu","Ehmin","trekilos","zagra","mezon","clokkane","rrmekap","santslan","sciro","fazoskulmeme","napboo","skuvivi","skrritoviv","Nugucc","prtamig","credtutt","cranan","lunrico","fraslap","gringruno","dankkilozar","Dubflexwoo","noyolo","tacogigasag","bongka","tiktoro","zazio","Unoch","scicas","lorrbo","brrauno","snagifrat","Popfazo","vinnapo","Amidu","Skbab","tacoskun","skfratdri","slanfli","morolocoskr","Skuslacras","credmi","Plnano","skplutviv","toyoflibab","rompriaha","vitomigovi","miami","ahagigabo","tanapo","Migbr","milsk","solokappaha","Crshad","tungtrappo","guctrjuju","cappri","lupguc","goztri","uno2vidu","Tikica","Nago","Guccvito","Shrr","metiki","dayol","milopop","troxna","brtre","nocrzin","belltu","sisiclok","Zasha","clca","tutbrsn","Boooto","Trmi","Zalup","grinbrr","frminlupo","memtac","Fropr","tritun","bongprimsla","blvivslap","Belskulpolo","micred","totori","famegtung","riczofl","gigaah","frbrfl","nekosh","skmini","Vinomormi","tunacapi","prilupmin","napaskul","tilo","nopezon","trtoroyolo","vitsombpol","plnotik","ritosci","grti","luporo"
+];
+
+let loopInterval;
+
+// Generate brainrot text with randomized syllables
+function makeItalianBrainrot(text) {
+  const words = text.split(/\s+/);
+  let result = "";
+  words.forEach(word => {
+    const count = Math.floor(Math.random() * 3) + 1; // 1-3 syllables per word
+    for (let i=0; i<count; i++) {
+      const syll = italianSyllables[Math.floor(Math.random() * italianSyllables.length)];
+      result += syll + " ";
+    }
+  });
+  return result.toUpperCase().trim();
+}
+
+// Speak using backend ElevenLabs API with optional pitch/speed chaos
+async function speakText(brainrotText) {
+  const response = await fetch("http://localhost:5000/speak", {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({text: brainrotText})
+  });
+
+  if(!response.ok) {
+    alert("Error generating audio");
+    return;
+  }
+
+  const arrayBuffer = await response.arrayBuffer();
+  const blob = new Blob([arrayBuffer], {type:"audio/mpeg"});
+  const url = URL.createObjectURL(blob);
+  const audio = new Audio(url);
+
+  // Optional chaos: slightly random playback rate
+  audio.playbackRate = 0.9 + Math.random() * 0.4; // 0.9 - 1.3
+  audio.play();
+}
+
+// Single generation
+function generateVoice() {
+  const input = document.getElementById('userInput').value.trim();
+  if(!input) return alert("Type something!");
+  const brainrotText = makeItalianBrainrot(input);
+  document.getElementById('output').textContent = brainrotText;
+  speakText(brainrotText);
+}
+
+// Loop generation
+function loopBrainrot() {
+  const input = document.getElementById('userInput').value.trim();
+  if(!input) return alert("Type something!");
+  stopLoop();
+  loopInterval = setInterval(() => {
+    const brainrotText = makeItalianBrainrot(input);
+    document.getElementById('output').textContent = brainrotText;
+    speakText(brainrotText);
+  }, 3500);
+}
+
+// Stop loop
+function stopLoop() {
+  if(loopInterval) clearInterval(loopInterval);
+  window.speechSynthesis.cancel();
+}
+</script>
+
+</body>
+</html>
